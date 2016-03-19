@@ -8,14 +8,14 @@ Usually this is good but there are situations in which you need better control o
 
 JSF AJAX updates are perfomed sending an XML response containing a collection of `<change>` tag elements. The class responsable for creating this response is the `PartialResponseWriter`.
 
-JSF allow you to replace a lot of its parts with you custom implementation, and fortunately you can replace the original `PartialResponseWriter`.
-You can override that class and use its method `startExtension()` to add a custom tag inside the response and read it using a JavaScript function (the function will be called 3 times: you have to check inside it that the status of the event object passed as parameter has to be equal to "success" to read the response).
+JSF allows you to replace a lot of its parts with you custom implementation, and fortunately you can replace the original `PartialResponseWriter`.
+You can override that class and use its method `startExtension()` to add a custom tag inside the response and read it using a JavaScript function (the function will be called [3 times](http://stackoverflow.com/a/13540905/771431): you have to check inside it that the status of the event object passed as parameter has to be equal to "success" to read the response).
 
 This project show you 3 examples in which a customized `PartialResponseWriter` is used to obtain custom communications between JavaScript functions and JSF.
 
 > **Note**: this examples use pure JSF. If you need to solve JSF AJAX problems you cold be interested also in taking a look at [OmniFaces Ajax methods](http://showcase.omnifaces.org/utils/Ajax).
 
-> **Note**: this examples was tested on Glassfish 4.1
+> **Note**: this examples were tested on Glassfish 4.1
 
 ## Example 1: updating only one attribute of an element
 > (Aka: avoid update focus problem on inputText keyup/keydown)
