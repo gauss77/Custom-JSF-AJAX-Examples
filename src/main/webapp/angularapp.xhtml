@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Facelet Title</title>
+        <h:outputStylesheet library="css" name="example.css" />
+        <h:outputScript library="js" name="jsfjs.js" />
+        <h:outputScript library="js" name="jquery.min.js" />
+        <h:outputScript library="js" name="angular.min.js" />
+        <script>
+            angular.module('myApp', []).factory('model', function () {
+                return JSON.parse('#{angularAppBean.JSONModel}');
+            });
+        </script>
+        <h:outputScript library="js" name="angular-example.js" />
+    </h:head>
+    <h:body>
+        <h:form id="myform">
+
+            <f:metadata>
+                <f:event type="postAddToView" listener="#{angularAppBean.onLoad}" />
+            </f:metadata>
+
+            <div class="angular-wrapper panel" ng-app="myApp">
+                <h2>This panel is controlled by AngularJS</h2>
+                <div ng-controller="mainController">
+                    <input type="text" ng-model="model.text" />
+                    <br/>
+                    <button type="button" class="btn" ng-click="sendModel()">Send updates --&gt;</button>
+                </div>
+            </div>
+
+            <h:panelGroup id="mypanel" class="jsf-wrapper panel">
+                <h2>This panel is controlled by JSF</h2>
+                <p>Current model: #{angularAppBean.JSONModel}</p>
+                <h:commandButton action="#{angularAppBean.processModel()}" class="btn" value="&lt;-- Uppercase and update">
+                    <f:ajax onevent="modelUpdated" execute="@form" render="myform:mypanel" />
+                </h:commandButton>
+            </h:panelGroup>
+
+        </h:form>
+    </h:body>
+</html>
